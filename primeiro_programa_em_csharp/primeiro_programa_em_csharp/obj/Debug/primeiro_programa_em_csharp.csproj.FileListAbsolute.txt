@@ -1,0 +1,8 @@
+C:\Users\vinir\OneDrive\Documentos\Curso\curso_allog\primeiro_programa_em_csharp\primeiro_programa_em_csharp\bin\Debug\primeiro_programa_em_csharp.exe.config
+C:\Users\vinir\OneDrive\Documentos\Curso\curso_allog\primeiro_programa_em_csharp\primeiro_programa_em_csharp\bin\Debug\primeiro_programa_em_csharp.exe
+C:\Users\vinir\OneDrive\Documentos\Curso\curso_allog\primeiro_programa_em_csharp\primeiro_programa_em_csharp\bin\Debug\primeiro_programa_em_csharp.pdb
+C:\Users\vinir\OneDrive\Documentos\Curso\curso_allog\primeiro_programa_em_csharp\primeiro_programa_em_csharp\obj\Debug\primeiro_programa_em_csharp.csproj.AssemblyReference.cache
+C:\Users\vinir\OneDrive\Documentos\Curso\curso_allog\primeiro_programa_em_csharp\primeiro_programa_em_csharp\obj\Debug\primeiro_programa_em_csharp.csproj.SuggestedBindingRedirects.cache
+C:\Users\vinir\OneDrive\Documentos\Curso\curso_allog\primeiro_programa_em_csharp\primeiro_programa_em_csharp\obj\Debug\primeiro_programa_em_csharp.csproj.CoreCompileInputs.cache
+C:\Users\vinir\OneDrive\Documentos\Curso\curso_allog\primeiro_programa_em_csharp\primeiro_programa_em_csharp\obj\Debug\primeiro_programa_em_csharp.exe
+C:\Users\vinir\OneDrive\Documentos\Curso\curso_allog\primeiro_programa_em_csharp\primeiro_programa_em_csharp\obj\Debug\primeiro_programa_em_csharp.pdb

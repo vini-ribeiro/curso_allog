@@ -1,0 +1,5 @@
+1 | Vinicius | azaleia | 47992920602 | vini.ribeiro2003
+2 | rodrigo | UFSC | 4732521651 | rodrigoscwartz
+1 | Julia | Univali | 987654321 | julia@gmail.com
+1 | Venancio | Santa Luiza |  | sla@gmail.com
+1 | Depois | Nao | Me | Venha
