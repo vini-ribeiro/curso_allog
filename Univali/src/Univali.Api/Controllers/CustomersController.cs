@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Univali.Api.Models;
 using Univali.Api.Entities;
 using Microsoft.AspNetCore.JsonPatch;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
 
 namespace Univali.Api.Controllers;
 
@@ -20,7 +21,7 @@ public class CustomersController : ControllerBase
                 Name = customer.Name,
                 Cpf = customer.Cpf
             }
-        ).ToList(); // eu preciso usar o ToList para forcar ela a virar uma lista. sem ele o ok vai transformar isso em lista mesmo sem o ToList
+        ); // eu preciso usar o ToList para forcar ela a virar uma lista. sem ele o ok vai transformar isso em lista mesmo sem o ToList (nao e necessario)
         // eu poderia fazer um foreach e criar um customerDTO para cada customer na minha singleton e botar em uma lista
 
         return Ok(customersToReturn);
@@ -87,6 +88,21 @@ public class CustomersController : ControllerBase
         CustomerForCreationDto customerForCreationDto
     )  // [FromBody] pode deixar sem isso, api controller ja faz isso para nos
     {
+        // o ideal e nao retornar um BadRequest
+        if (!ModelState.IsValid)
+        {
+            Response.ContentType = "application/problem+json";
+            //cria a fabrica de um objeto de detalhes de problema de validadcao
+            var problemDetailsFactory = HttpContext.RequestServices
+                .GetRequiredService<ProblemDetailsFactory>();
+            var validationProblemDetails = problemDetailsFactory.CreateValidationProblemDetails(HttpContext, ModelState);
+
+            //atribui o status 422 no corpo do response
+            validationProblemDetails.Status = StatusCodes.Status422UnprocessableEntity;
+
+            return UnprocessableEntity(validationProblemDetails);
+        } 
+
         // sempre construir quando decebe e sempre controi quando vai enviar
         var customerEntity = new Customer()
         {
@@ -183,4 +199,29 @@ public class CustomersController : ControllerBase
 
         return NoContent();
     }
+
+    [HttpGet("with-address")]
+    public ActionResult<IEnumerable<CustomerWithAddressesDto>> GetCustomersWithAddress()
+    {
+        var customersFromDataBase = Data.Instance.Customers;
+
+        var customersToReturn = customersFromDataBase
+            .Select(customer => new CustomerWithAddressesDto
+            {
+                Id = customer.Id,
+                Name = customer.Name,
+                Cpf = customer.Cpf,
+                Address = customer.Addresses
+                    .Select(address => new AddressDto()
+                    {
+                        Id = address.Id,
+                        City = address.City,
+                        Street = address.Street,
+                    }).ToList()
+            });
+
+        return Ok(customersToReturn);
+    }
+
+       
 }
