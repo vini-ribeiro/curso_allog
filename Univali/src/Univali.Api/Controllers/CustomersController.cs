@@ -223,5 +223,32 @@ public class CustomersController : ControllerBase
         return Ok(customersToReturn);
     }
 
+    [HttpPost("with-address")]
+    public ActionResult CreateCustomerWithAddresses
+    (
+        CustomerWithAddressesForCreationDto customerWithAddressesForCreationDto
+    )
+    {
+        int geradorIds = 1;
 
+        Customer customerEntity = new Customer()
+        {
+            Id = Data.Instance.Customers.Max(customer => customer.Id) + 1,
+            Name = customerWithAddressesForCreationDto.Name,
+            Cpf = customerWithAddressesForCreationDto.Cpf,
+            Addresses = customerWithAddressesForCreationDto.Addresses.Select
+            (
+                address => new Address()
+                {
+                    Id = geradorIds++,
+                    Street = address.Street,
+                    City = address.City
+                }
+            ).ToList()
+        };
+
+        Data.Instance.Customers.Add(customerEntity);
+
+        return NoContent();
+    }
 }

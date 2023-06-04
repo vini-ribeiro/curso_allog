@@ -110,13 +110,27 @@ public class AddressesController : ControllerBase
 
         customerFromDataBase.Addresses.Remove(addressToDelete);
 
+        /*
+        var addressOfCustomerFromDataBase = Data.Instance.Customers
+            .FirstOrDefault(customer => customer.Id == customerId)
+            ?.Addresses.FirstOrDefault(address => address.Id == addressId);
+        
+        if (addressOfCustomerFromDataBase == null) return NotFound();
+
+        Data.Instance.Customers
+            .FirstOrDefault(customer => customer.Id == customerId)
+            ?.Addresses.Remove(addressOfCustomerFromDataBase);
+        */
+
         return NoContent();
     }
 
     [HttpPut("{addressId}")]
     public ActionResult UpdateAddress
     (
-        int customerId, int addressId, AddressForUpdateDto addressForUpdateDto
+        int customerId,
+        int addressId,
+        AddressForUpdateDto addressForUpdateDto
     )
     {
         if (addressId != addressForUpdateDto.Id) return BadRequest();
@@ -142,7 +156,8 @@ public class AddressesController : ControllerBase
     [HttpPut]
     public ActionResult UpdateCustomerAddresses
     (
-        int customerId, ICollection<AddressForCreationDto> addressForCreationDto
+        int customerId,
+        IEnumerable<AddressForCreationDto> addressForCreationDto
     )
     {
         var customerFromDataBase = Data.Instance.Customers
@@ -150,20 +165,18 @@ public class AddressesController : ControllerBase
 
         if (customerFromDataBase == null) return NotFound();
 
-        List<Address> addressesEntity = new List<Address>();
-        int k = 1;
-        foreach (AddressForCreationDto addressFromInput in addressForCreationDto)
-        {
-            addressesEntity.Add
-            (
-                new Address()
-                {
-                    Id = k++,
-                    Street = addressFromInput.Street,
-                    City = addressFromInput.City
-                }
-            );
-        }
+        int geradorIds = 1;
+        List<Address> addressesEntity = addressForCreationDto.Select
+        (
+            addressFromInput => new Address()
+            {
+                Id = geradorIds++,
+                Street = addressFromInput.Street,
+                City = addressFromInput.City
+            }
+        ).ToList();
+
+        customerFromDataBase.Addresses = addressesEntity;
 
         /*
         ICollection<Address> addressesEntity = customerFromDataBase.Addresses
