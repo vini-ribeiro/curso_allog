@@ -147,12 +147,6 @@ public class AddressesController : ControllerBase
         return NoContent();
     }
 
-    [HttpPost]
-    public ActionResult CreateCustomerWithAddresses(int customerId)
-    {
-        return NoContent();
-    }
-
     [HttpPut]
     public ActionResult UpdateCustomerAddresses
     (
@@ -177,19 +171,6 @@ public class AddressesController : ControllerBase
         ).ToList();
 
         customerFromDataBase.Addresses = addressesEntity;
-
-        /*
-        ICollection<Address> addressesEntity = customerFromDataBase.Addresses
-            .SelectMany
-            (
-                addressDto => new Address()
-                {
-                    Id = addressDto.Id,                    
-                    Street = addressDto.Street,                    
-                    City = addressDto.City                    
-                }
-            );
-        */
 
         return NoContent();
     }
