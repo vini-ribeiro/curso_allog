@@ -15,7 +15,7 @@ public class CustomersController : ControllerBase
     {
         var customersToReturn = Data.Instance.Customers.Select
         (
-            customer => new CustomerDTO 
+            customer => new CustomerDTO
             {
                 Id = customer.Id,
                 Name = customer.Name,
@@ -34,7 +34,7 @@ public class CustomersController : ControllerBase
     // se passar do tamanho do int ele cai em cpf
     public ActionResult<CustomerDTO> GetCustomerByID(int id)
     {
-        var customerFromDatabase = 
+        var customerFromDatabase =
             Data.Instance.Customers.FirstOrDefault<Customer>(n => n.Id == id);
 
         if (customerFromDatabase == null) return NotFound();
@@ -67,7 +67,7 @@ public class CustomersController : ControllerBase
     [HttpGet("cpf/{cpf}")]
     public ActionResult<CustomerDTO> GetCustomerByCpf(string cpf)
     {
-        var customerFromDatabase = 
+        var customerFromDatabase =
             Data.Instance.Customers.FirstOrDefault<Customer>(c => c.Cpf == cpf);
 
         if (customerFromDatabase == null) return NotFound();
@@ -101,7 +101,7 @@ public class CustomersController : ControllerBase
             validationProblemDetails.Status = StatusCodes.Status422UnprocessableEntity;
 
             return UnprocessableEntity(validationProblemDetails);
-        } 
+        }
 
         // sempre construir quando decebe e sempre controi quando vai enviar
         var customerEntity = new Customer()
@@ -118,7 +118,7 @@ public class CustomersController : ControllerBase
         {
             Id = customerEntity.Id,
             Name = customerForCreationDto.Name,
-            Cpf = customerForCreationDto.Cpf 
+            Cpf = customerForCreationDto.Cpf
         };
         //return Ok(newCustomer);
         // retornamos uma rota
@@ -130,7 +130,7 @@ public class CustomersController : ControllerBase
         );
     }
 
-    [HttpDelete("{id}")] 
+    [HttpDelete("{id}")]
     public ActionResult DeleteCustomerById(int id)
     {
         var customerFromDataBase = Data.Instance.Customers
@@ -143,20 +143,20 @@ public class CustomersController : ControllerBase
         return NoContent();
     }
 
-/*
-    [HttpDelete("deleteByCpf/{cpf}")]
-    public ActionResult DeleteCustomerByCpf(string cpf)
-    {
-        var customerFromDataBase = Data.Instance.Customers
-            .FirstOrDefault<Customer>(customer => customer.Cpf == cpf);
+    /*
+        [HttpDelete("deleteByCpf/{cpf}")]
+        public ActionResult DeleteCustomerByCpf(string cpf)
+        {
+            var customerFromDataBase = Data.Instance.Customers
+                .FirstOrDefault<Customer>(customer => customer.Cpf == cpf);
 
-        if (customerFromDataBase == null) return NotFound();
+            if (customerFromDataBase == null) return NotFound();
 
-        Data.Instance.Customers.Remove(customerFromDataBase);
+            Data.Instance.Customers.Remove(customerFromDataBase);
 
-        return NoContent();
-    }
-*/
+            return NoContent();
+        }
+    */
     [HttpPut("{id}")]
     public ActionResult UpdateCustomerById
     (
@@ -216,12 +216,12 @@ public class CustomersController : ControllerBase
                     {
                         Id = address.Id,
                         City = address.City,
-                        Street = address.Street,
+                        Street = address.Street
                     }).ToList()
             });
 
         return Ok(customersToReturn);
     }
 
-       
+
 }

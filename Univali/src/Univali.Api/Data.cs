@@ -14,63 +14,63 @@ namespace Univali.Api
                 new  Customer
                 {
                     Id = 1,
-                    Name = "Robssom",
-                    Cpf = "00891528246545",
+                    Name = "Customer 1",
+                    Cpf = "11111111111",
                     Addresses = new List<Address>()
                     {
                         new Address()
                         {
                             Id = 1,
-                            Street = "Verao do cometa",
-                            City = "Elvira"
+                            Street = "Primeira rua do Customer 1",
+                            City = "Primeira cidade do Customer 1"
                         },
                         new Address()
                         {
-                            Id = 1,
-                            Street = "Inverno do aster",
-                            City = "ouvira"
+                            Id = 2,
+                            Street = "Segunda rua do Customer 1",
+                            City = "Segunda cidade do Customer 1"
                         }
                     }
                 },
                 new Customer
                 {
                     Id = 2,
-                    Name = "Jundiado",
-                    Cpf = "00791528237",
+                    Name = "Customer 2",
+                    Cpf = "22222222222",
                     Addresses = new List<Address>()
                     {
                         new Address()
                         {
                             Id = 1,
-                            Street = "Outono do cometa",
-                            City = "city do 2"
+                            Street = "Primeira rua do Customer 2",
+                            City = "Primeira cidade do Customer 2"
                         },
                         new Address()
                         {
-                            Id = 1,
-                            Street = "Outono do aster",
-                            City = "outra city do 2"
+                            Id = 2,
+                            Street = "Segunda rua do Customer 2",
+                            City = "Segunda cidade do Customer 2"
                         }
                     }
                 },
                 new Customer
                 {
                     Id = 3,
-                    Name = "Rodrigo",
-                    Cpf = "865412385",
+                    Name = "Customer 3",
+                    Cpf = "33333333333",
                     Addresses = new List<Address>()
                     {
                         new Address()
                         {
                             Id = 1,
-                            Street = "Primavera do cometa",
-                            City = "city do 3"
+                            Street = "Primeira rua do Customer 3",
+                            City = "Primeira cidade do Customer 3"
                         },
                         new Address()
                         {
-                            Id = 1,
-                            Street = "Primavera do aster",
-                            City = "outra city do 3"
+                            Id = 2,
+                            Street = "Segunda rua do Customer 3",
+                            City = "Segunda cidade do Customer 3"
                         }
                     }
                 }
