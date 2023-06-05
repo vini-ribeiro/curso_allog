@@ -223,13 +223,46 @@ public class CustomersController : ControllerBase
         return Ok(customersToReturn);
     }
 
+    [HttpPut("with-address/{customerId}")]
+    public ActionResult UpdateCustomerWithAddresses
+    (
+        int customerId,
+        CustomerWithAddressesForUpdateDto customerWithAddressesForUpdateDto
+    )
+    {
+        var customerFromDataBase = Data.Instance.Customers
+            .FirstOrDefault(customer => customer.Id == customerId);
+
+        if (customerFromDataBase == null) return NotFound();
+
+        customerFromDataBase.Name = customerWithAddressesForUpdateDto.Name;
+        customerFromDataBase.Cpf = customerWithAddressesForUpdateDto.Cpf;
+
+        int maxId = Data.Instance.Customers.SelectMany(customers => customers.Addresses)
+                        .Max(address => address.Id) + 1;
+
+        customerFromDataBase.Addresses = customerWithAddressesForUpdateDto.Addresses
+            .Select
+            (
+                address => new Address()
+                {
+                    Id = maxId++,
+                    Street = address.Street,
+                    City = address.City,
+                }
+            ).ToList();
+
+        return NoContent();
+    }
+
     [HttpPost("with-address")]
     public ActionResult CreateCustomerWithAddresses
     (
         CustomerWithAddressesForCreationDto customerWithAddressesForCreationDto
     )
     {
-        int geradorIds = 1;
+        int maxId = Data.Instance.Customers.SelectMany(customers => customers.Addresses)
+                            .Max(address => address.Id) + 1;
 
         Customer customerEntity = new Customer()
         {
@@ -240,7 +273,7 @@ public class CustomersController : ControllerBase
             (
                 address => new Address()
                 {
-                    Id = geradorIds++,
+                    Id = maxId++,
                     Street = address.Street,
                     City = address.City
                 }

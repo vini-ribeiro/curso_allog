@@ -1,4 +1,4 @@
-namespace Univali.Api.Entities;
+namespace Univali.Api.Models;
 
 public class AddressForUpdateDto
 {

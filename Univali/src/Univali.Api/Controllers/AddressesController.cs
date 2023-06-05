@@ -85,7 +85,8 @@ public class AddressesController : ControllerBase
 
         Address addressEntity = new Address()
         {
-            Id = customerFromDataBase.Addresses.Max(address => address.Id) + 1,
+            Id = Data.Instance.Customers.SelectMany(customers => customers.Addresses)
+                    .Max(address => address.Id) + 1,
             Street = addressForCreationDto.Street,
             City = addressForCreationDto.City
         };
@@ -147,6 +148,7 @@ public class AddressesController : ControllerBase
         return NoContent();
     }
 
+    /*
     [HttpPut]
     public ActionResult UpdateCustomerAddresses
     (
@@ -159,12 +161,14 @@ public class AddressesController : ControllerBase
 
         if (customerFromDataBase == null) return NotFound();
 
-        int geradorIds = 1;
+        int maxId = Data.Instance.Customers.SelectMany(customers => customers.Addresses)
+                        .Max(address => address.Id) + 1;
+
         List<Address> addressesEntity = addressForCreationDto.Select
         (
             addressFromInput => new Address()
             {
-                Id = geradorIds++,
+                Id = maxId++,
                 Street = addressFromInput.Street,
                 City = addressFromInput.City
             }
@@ -174,4 +178,5 @@ public class AddressesController : ControllerBase
 
         return NoContent();
     }
+    */
 }

@@ -41,13 +41,13 @@ namespace Univali.Api
                     {
                         new Address()
                         {
-                            Id = 1,
+                            Id = 3,
                             Street = "Primeira rua do Customer 2",
                             City = "Primeira cidade do Customer 2"
                         },
                         new Address()
                         {
-                            Id = 2,
+                            Id = 4,
                             Street = "Segunda rua do Customer 2",
                             City = "Segunda cidade do Customer 2"
                         }
@@ -62,13 +62,13 @@ namespace Univali.Api
                     {
                         new Address()
                         {
-                            Id = 1,
+                            Id = 5,
                             Street = "Primeira rua do Customer 3",
                             City = "Primeira cidade do Customer 3"
                         },
                         new Address()
                         {
-                            Id = 2,
+                            Id = 6,
                             Street = "Segunda rua do Customer 3",
                             City = "Segunda cidade do Customer 3"
                         }
