@@ -18,7 +18,7 @@ builder.Services.AddSingleton<Data>();
 
 builder.Services.AddDbContext<CustomerContext>(options => 
 {
-    options.UseNpgsql("Host=localhost;Database=Univali;Username=postgres;Password=123456");
+    options.UseNpgsql("Host=localhost;Database=Univali;Username=postgres;Password=postgres");
 }
 );
 
@@ -27,7 +27,7 @@ builder.Services.AddControllers(options =>
     options.InputFormatters.Insert(0, MyJPIF.GetJsonPatchInputFormatter());
 }).ConfigureApiBehaviorOptions(setupAction =>
        {
-           setupAction.InvalidModelStateResponseFactory = context =>
+           setupAction.InvalidModelStateResponseFactory = context =>    
            {
                // Cria a fábrica de um objeto de detalhes de problema de validação
                var problemDetailsFactory = context.HttpContext.RequestServices
