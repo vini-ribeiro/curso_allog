@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "F8I+2xaLtJWXMsvmo1B/icMDqqaBfpIMUT89p5UHNf+tvSWhm03DVckh6H+5h+5M15W5GxVu00vKgztuNTUwPQ==",
+  "dgSpecHash": "I1kg99rEApRXZK+gya00dQxQ9xkU6cxPlsvMolJvtHYGiupOkIcj8OXGVGXoAc6buZmgewEfsb7xoTvguC/XUQ==",
   "success": true,
-  "projectFilePath": "C:\\Users\\vinir\\OneDrive\\Desktop\\Univali_jackssom_terminar_async_e_repository\\src\\Univali.Api\\Univali.Api.csproj",
+  "projectFilePath": "C:\\Users\\vinir\\OneDrive\\Documentos\\Curso\\curso_allog\\Univali_jackssom_terminar_async_e_repository\\src\\Univali.Api\\Univali.Api.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\vinir\\.nuget\\packages\\automapper\\12.0.1\\automapper.12.0.1.nupkg.sha512",
     "C:\\Users\\vinir\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\12.0.1\\automapper.extensions.microsoft.dependencyinjection.12.0.1.nupkg.sha512",

@@ -134,11 +134,12 @@ public class AddressesController : MainController
     }
 
     [HttpPut("{addressId}")]
-    public ActionResult UpdateAddress(int customerId, int addressId,
+    public async Task<ActionResult> UpdateAddress(int customerId, int addressId,
        AddressForUpdateDto addressForUpdateDto)
     {
         if (addressForUpdateDto.Id != addressId) return BadRequest();
 
+        /*
         var customerFromDatabase = _context.Customers.Include(c => c.Addresses)
             .FirstOrDefault(c => c.Id == customerId);
 
@@ -155,6 +156,16 @@ public class AddressesController : MainController
         _mapper.Map(addressForUpdateDto, addressFromDatabase);
 
         _context.SaveChanges();
+        */
+
+        bool customerExist = await _customerRepository.CustomerExistAsync(customerId);
+
+        if (!customerExist) return NotFound();
+
+        var addressToUpdate = _mapper.Map<Address>(addressForUpdateDto); // addressForUpdateDto tem o id
+        addressToUpdate.CustomerId = customerId;
+
+        await _customerRepository.UpdateAddressAsync(addressToUpdate);
 
         return NoContent();
     }

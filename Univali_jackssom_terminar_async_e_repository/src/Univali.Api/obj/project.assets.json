@@ -1768,11 +1768,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\vinir\\OneDrive\\Desktop\\Univali_jackssom_terminar_async_e_repository\\src\\Univali.Api\\Univali.Api.csproj",
+      "projectUniqueName": "C:\\Users\\vinir\\OneDrive\\Documentos\\Curso\\curso_allog\\Univali_jackssom_terminar_async_e_repository\\src\\Univali.Api\\Univali.Api.csproj",
       "projectName": "Univali.Api",
-      "projectPath": "C:\\Users\\vinir\\OneDrive\\Desktop\\Univali_jackssom_terminar_async_e_repository\\src\\Univali.Api\\Univali.Api.csproj",
+      "projectPath": "C:\\Users\\vinir\\OneDrive\\Documentos\\Curso\\curso_allog\\Univali_jackssom_terminar_async_e_repository\\src\\Univali.Api\\Univali.Api.csproj",
       "packagesPath": "C:\\Users\\vinir\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\vinir\\OneDrive\\Desktop\\Univali_jackssom_terminar_async_e_repository\\src\\Univali.Api\\obj\\",
+      "outputPath": "C:\\Users\\vinir\\OneDrive\\Documentos\\Curso\\curso_allog\\Univali_jackssom_terminar_async_e_repository\\src\\Univali.Api\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\vinir\\AppData\\Roaming\\NuGet\\NuGet.Config",
