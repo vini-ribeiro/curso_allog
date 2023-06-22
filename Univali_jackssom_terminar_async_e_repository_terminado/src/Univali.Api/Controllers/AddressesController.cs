@@ -3,6 +3,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Univali.Api.DbContexts;
 using Univali.Api.Entities;
+using Univali.Api.Features.Addresses.Commands.CreateAddress;
+using Univali.Api.Features.Addresses.Queries.GetAddressDetail;
+using Univali.Api.Features.Addresses.Queries.GetAddressesDetail;
 using Univali.Api.Models;
 using Univali.Api.Repositories;
 
@@ -26,7 +29,9 @@ public class AddressesController : MainController
     }
 
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<AddressDto>>> GetAddresses(int customerId)
+    public async Task<ActionResult<IEnumerable<AddressDto>>> GetAddresses(int customerId,
+        [FromServices] IGetAddressesDetailQueryHandler handler
+    )
     {
         // var customerFromDatabase = _context.Customers.Include(c => c.Addresses)
         //     .FirstOrDefault(customer => customer.Id == customerId);
@@ -35,29 +40,38 @@ public class AddressesController : MainController
         // var addressesFromCustomerFromDatabse = _context.Addresses
         //     .Where(address => address.CustomerId == customerId).ToList(); // para funcinar no banco
 
-        var addressesFromCustomerFromDatabse = await _customerRepository.GetAddressesAsync(customerId);
+        // var addressesFromCustomerFromDatabse = await _customerRepository.GetAddressesAsync(customerId);
 
-        if (addressesFromCustomerFromDatabse == null) return NotFound();
+        // if (addressesFromCustomerFromDatabse == null) return NotFound();
 
-        // var addressesToReturn = new List<AddressDto>();
+        // // var addressesToReturn = new List<AddressDto>();
 
-        // foreach (var address in customerFromDatabase.Addresses)
-        // {
-        //     addressesToReturn.Add(new AddressDto
-        //     {
-        //         Id = address.Id,
-        //         Street = address.Street,
-        //         City = address.City
-        //     });
-        // }
+        // // foreach (var address in customerFromDatabase.Addresses)
+        // // {
+        // //     addressesToReturn.Add(new AddressDto
+        // //     {
+        // //         Id = address.Id,
+        // //         Street = address.Street,
+        // //         City = address.City
+        // //     });
+        // // }
 
-        var addressesToReturn = _mapper.Map<IEnumerable<AddressDto>>(addressesFromCustomerFromDatabse);
+        // var addressesToReturn = _mapper.Map<IEnumerable<AddressDto>>(addressesFromCustomerFromDatabse);
+
+        var getAddressesDetailQuery = new GetAddressesDetailQuery {Id = customerId};
+
+        var addressesToReturn = await handler.Handle(getAddressesDetailQuery);
 
         return Ok(addressesToReturn);
     }
 
     [HttpGet("{addressId}", Name = "GetAddress")]
-    public async Task<ActionResult<AddressDto>> GetAddress(int customerId, int addressId) // aqui customerId se torna inutil
+    public async Task<ActionResult<AddressDto>> GetAddress
+    (
+        int customerId, 
+        int addressId,
+        [FromServices] IGetAddressDetailQueryHandler handler
+    ) // aqui customerId se torna inutil
     {
         // var customerFromDatabase = _context.Customers.Include(c => c.Addresses)
         //     .FirstOrDefault(customer => customer.Id == customerId);
@@ -66,18 +80,24 @@ public class AddressesController : MainController
 
         // var addressFromDatabase = customerFromDatabase.Addresses
         //     .FirstOrDefault(address => address.Id == addressId);
-        var addressFromDatabase = await _customerRepository.GetAddressAsync(addressId);
+        // var addressFromDatabase = await _customerRepository.GetAddressAsync(addressId);
 
-        if (addressFromDatabase == null) return NotFound();
+        // if (addressFromDatabase == null) return NotFound();
 
-        // var addressToReturn = new AddressDto
-        // {
-        //     Id = addressFromDatabase.Id,
-        //     Street = addressFromDatabase.Street,
-        //     City = addressFromDatabase.City
-        // };
+        // // var addressToReturn = new AddressDto
+        // // {
+        // //     Id = addressFromDatabase.Id,
+        // //     Street = addressFromDatabase.Street,
+        // //     City = addressFromDatabase.City
+        // // };
 
-        var addressToReturn = _mapper.Map<AddressDto>(addressFromDatabase);
+        // var addressToReturn = _mapper.Map<AddressDto>(addressFromDatabase);
+
+        var getAddressDetailQuery = new GetAddressDetailQuery {Id = addressId};
+
+        var addressToReturn = await handler.Handle(getAddressDetailQuery);
+
+        if (addressToReturn == null) return NotFound();
 
         return Ok(addressToReturn);
     }
@@ -85,25 +105,26 @@ public class AddressesController : MainController
     [HttpPost]
     public async Task<ActionResult<AddressDto>> CreateAddress(
        int customerId,
-       AddressForCreationDto addressForCreationDto)
+       AddressForCreationDto addressForCreationDto,
+       [FromServices] ICreateAddressCommandHandler handler)
     {
         // var customerFromDatabase = _context.Customers.Include(c => c.Addresses)
-        //     .FirstOrDefault(c => c.Id == customerId);
+        // //     .FirstOrDefault(c => c.Id == customerId);
 
-        bool customerExist = await _customerRepository.CustomerExistAsync(customerId);
+        // bool customerExist = await _customerRepository.CustomerExistAsync(customerId);
 
-        if (!customerExist) return NotFound();
+        // if (!customerExist) return NotFound();
 
-        // var maxAddressId = _data.Customers
-        //     .SelectMany(c => c.Addresses).Max(a => a.Id);
+        // // var maxAddressId = _data.Customers
+        // //     .SelectMany(c => c.Addresses).Max(a => a.Id);
 
-        var addressEntity = _mapper.Map<Address>(addressForCreationDto);
-        addressEntity.CustomerId = customerId;
-        addressEntity.Customer = await _customerRepository.GetCustomerByIdAsync(customerId);
-        // addressEntity.Id = maxAddressId + 1;
+        // var addressEntity = _mapper.Map<Address>(addressForCreationDto);
+        // addressEntity.CustomerId = customerId;
+        // addressEntity.Customer = await _customerRepository.GetCustomerByIdAsync(customerId);
+        // // addressEntity.Id = maxAddressId + 1;
 
-        Address addressCreated = await _customerRepository.CreateAddressAsync(addressEntity);
-        var addressToReturn = _mapper.Map<AddressDto>(addressCreated);
+        // Address addressCreated = await _customerRepository.CreateAddressAsync(addressEntity);
+        // var addressToReturn = _mapper.Map<AddressDto>(addressCreated);
 
         // var addressToReturn = _mapper.Map<AddressDto>(addressEntity);
 
@@ -122,6 +143,15 @@ public class AddressesController : MainController
         //     City = addressEntity.City,
         //     Street = addressEntity.Street
         // };
+
+        var createAddressCommand = new CreateAddressCommand 
+        {
+            Street = addressForCreationDto.Street,
+            City = addressForCreationDto.City,
+            customerId = customerId
+        };
+
+        var addressToReturn = await handler.Handle(createAddressCommand);
 
         return CreatedAtRoute("GetAddress",
             new

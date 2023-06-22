@@ -5,6 +5,9 @@ using Univali.Api;
 using Univali.Api.Configuration;
 using Univali.Api.DbContexts;
 using Univali.Api.Extensions;
+using Univali.Api.Features.Addresses.Commands.CreateAddress;
+using Univali.Api.Features.Addresses.Queries.GetAddressDetail;
+using Univali.Api.Features.Addresses.Queries.GetAddressesDetail;
 using Univali.Api.Features.Customers.Commands.CreateCustomer;
 using Univali.Api.Features.Customers.Commands.DeleteCustomer;
 using Univali.Api.Features.Customers.Commands.UpdateCustomer;
@@ -36,6 +39,10 @@ builder.Services.AddTransient<IUpdateCustomerCommandHandler, UpdateCustomerComma
 builder.Services.AddTransient<IDeleteCustomerCommandHandler, DeleteCustomerCommandHandler>();
 builder.Services.AddTransient<IGetCustomersWithAddressesDetailQueryHandler, GetCustomersWithAddressesDetailQueryHandler>();
 builder.Services.AddTransient<IGetCustomerWithAddressesDetailQueryHandler, GetCustomerWithAddressesDetailQueryHandler>();
+
+builder.Services.AddTransient<IGetAddressesDetailQueryHandler, GetAddressesDetailQueryHandler>();
+builder.Services.AddTransient<IGetAddressDetailQueryHandler, GetAddressDetailQueryHandler>();
+builder.Services.AddTransient<ICreateAddressCommandHandler, CreateAddressCommandHandler>();
 
 // ef
 builder.Services.AddDbContext<CustomerContext>(options =>

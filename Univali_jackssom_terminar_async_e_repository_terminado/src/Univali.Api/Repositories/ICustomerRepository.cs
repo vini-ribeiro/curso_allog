@@ -35,5 +35,6 @@ public interface ICustomerRepository
 
     void UpdateCustomer(Customer customer);
     void DeleteCustomer(Customer customer);
+    void AddAddress(Address address);
 }
 

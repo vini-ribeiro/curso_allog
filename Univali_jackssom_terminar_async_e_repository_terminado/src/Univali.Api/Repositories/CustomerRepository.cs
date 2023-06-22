@@ -29,17 +29,6 @@ public class CustomerRepository : ICustomerRepository
 
         return true;
     }
-
-    public async Task<IEnumerable<Address>> GetAddressesAsync(int customerId)
-    {
-        return await _context.Addresses
-            .Where(address => address.CustomerId == customerId).ToListAsync();
-    }
-    
-    public async Task<Address?> GetAddressAsync(int addressId)
-    {
-        return await _context.Addresses.FirstOrDefaultAsync(address => address.Id == addressId); // revisar
-    }
     
     public async Task<Address> CreateAddressAsync(Address addressToCreate)
     {
@@ -156,5 +145,21 @@ public class CustomerRepository : ICustomerRepository
     {
         return await _context.Customers.Include(c => c.Addresses)
             .FirstOrDefaultAsync(c => c.Id == customerId);
+    }
+
+    public async Task<IEnumerable<Address>> GetAddressesAsync(int customerId)
+    {
+        return await _context.Addresses
+            .Where(address => address.CustomerId == customerId).ToListAsync();
+    }
+    
+    public async Task<Address?> GetAddressAsync(int addressId)
+    {
+        return await _context.Addresses.FirstOrDefaultAsync(address => address.Id == addressId); // revisar
+    }
+
+    public void AddAddress(Address address) // adicionar nao deve ser async pois nao espera nada do bd
+    {
+        _context.Addresses.Add(address);
     }
 }
